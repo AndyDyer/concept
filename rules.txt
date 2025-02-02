@@ -1,0 +1,843 @@
+Game Overview:
+Concept is a party game where players work in teams of two to help others guess words or phrases. The team places pawns and cubes on a board filled with universal icons to create visual clues. For example, to get others to guess "baseball," you might place pieces on icons representing "sport" (main concept), "white ball," and "wooden cylinder" (sub-concepts). Players can freely guess while the team gives clues. The first player to guess correctly gets 2 points, and the team gets 1 point each. While there is a scoring system, the rules note that many players prefer to play just for fun without keeping score.
+Board and Pieces Setup:
+
+The Game Board:
+
+
+Contains a collection of universal icons that represent various concepts
+Is placed in the center where all players can easily see and reach it
+Icons can have multiple meanings (for example, a "cold" icon could represent temperature or winter season)
+
+
+The Playing Pieces:
+
+
+Main Concept (Green Set):
+
+One large question mark pawn
+10 green cubes
+Used to establish the primary thing players need to guess
+
+
+Sub-Concept Sets (Blue, Red, Yellow, and Black):
+
+Each has one exclamation mark pawn
+Each has 8 cubes
+Used to add additional clues or modify the main concept
+
+
+
+How Concepts Work:
+
+Teams always start with the green main concept pawn to establish the basic idea
+Green cubes are placed on related icons to clarify the main concept
+If more clarification is needed, teams can add sub-concept pawns (exclamation marks) in different colors
+Each sub-concept uses cubes of matching colors to build upon or modify the main idea
+Teams can use as many or as few pieces as needed
+The order of placing cubes can be important for conveying meaning
+Teams can remove and rearrange pieces if players are stuck
+
+For example, if your word was "Eiffel Tower," you might start with the green pawn on "building" icons, then use green cubes to show it's metallic. You could then add a blue sub-concept to indicate France using the country's flag colors (blue, white, and red).
+
+
+
+// Define a type for a Player
+interface Player {
+  id: number;
+  name: string;
+  score: number;
+  tokens: {
+    single: number;
+    double: number;
+  };
+}
+
+// Define a type for a Team
+interface Team {
+  name: string;
+  color: string;
+  players: Player[];
+}
+
+// Define a type for the GameState
+interface GameState {
+  started: boolean;
+  teams: Team[];
+  currentTeam: Team | null;
+  roundNumber: number;
+}
+
+// Define a type for the AppState
+interface AppState {
+  gameState: GameState;
+}
+
+// Example of how to use these types in a component
+export type { Player, Team, GameState, AppState };
+
+
+
+{
+    "package": {
+        "description": [
+            "Object",
+            "Thing",
+            "Package"
+        ]
+    },
+    "group": {
+        "description": [
+            "Person",
+            "Family",
+            "Group"
+        ]
+    },
+    "female": {
+        "description": [
+            "Female/Woman",
+            "Wife",
+            "Feminine"
+        ]
+    },
+    "male": {
+        "description": [
+            "Male/Man",
+            "Husband",
+            "Masculine"
+        ]
+    },
+    "work": {
+        "description": [
+            "Work",
+            "Profession",
+            "Craft"
+        ]
+    },
+    "recreation": {
+        "description": [
+            "Recreation",
+            "Sport",
+            "Activity"
+        ]
+    },
+    "wildlife": {
+        "description": [
+            "Wildlife",
+            "Animal"
+        ]
+    },
+    "flora": {
+        "description": [
+            "Flora",
+            "Nature",
+            "Plant"
+        ]
+    },
+    "literature": {
+        "description": [
+            "Literature",
+            "Writing",
+            "Book"
+        ]
+    },
+    "music": {
+        "description": [
+            "Music",
+            "Song",
+            "Note"
+        ]
+    },
+    "theater": {
+        "description": [
+            "Theater",
+            "Film",
+            "Camera"
+        ]
+    },
+    "arts": {
+        "description": [
+            "Arts",
+            "Sculpture/Painting",
+            "Drawing/Comics"
+        ]
+    },
+    "television": {
+        "description": [
+            "Television",
+            "Broadcast",
+            "Series"
+        ]
+    },
+    "title": {
+        "description": [
+            "Title",
+            "Brand",
+            "Name"
+        ]
+    },
+    "idea": {
+        "description": [
+            "Idea",
+            "Thought",
+            "Concept"
+        ]
+    },
+    "expression": {
+        "description": [
+            "Expression/Quote",
+            "Speak",
+            "Word"
+        ]
+    },
+    "location": {
+        "description": [
+            "Location",
+            "Country",
+            "Flag"
+        ]
+    },
+    "building": {
+        "description": [
+            "Building",
+            "Construction",
+            "City"
+        ]
+    },
+    "date": {
+        "description": [
+            "Date",
+            "Event",
+            "Daytime"
+        ]
+    },
+    "holidays": {
+        "description": [
+            "Holidays",
+            "Birthday",
+            "Celebration"
+        ]
+    },
+    "watercraft": {
+        "description": [
+            "Watercraft",
+            "Maritime",
+            "Swim"
+        ]
+    },
+    "airborne": {
+        "description": [
+            "Airborne vehicle",
+            "Airline",
+            "Fly"
+        ]
+    },
+    "land_vehicle": {
+        "description": [
+            "Land vehicle",
+            "Car",
+            "Ride"
+        ]
+    },
+    "tools": {
+        "description": [
+            "Tools",
+            "Construction"
+        ]
+    },
+    "games": {
+        "description": [
+            "Games",
+            "Toys",
+            "Youth"
+        ]
+    },
+    "clothing": {
+        "description": [
+            "Clothing",
+            "Accessories",
+            "Costume"
+        ]
+    },
+    "food": {
+        "description": [
+            "Food",
+            "Nutrition",
+            "Edible"
+        ]
+    },
+    "home": {
+        "description": [
+            "Home",
+            "Interior",
+            "Domestic"
+        ]
+    },
+    "reality": {
+        "description": [
+            "Reality",
+            "History"
+        ]
+    },
+    "fictional": {
+        "description": [
+            "Fictional",
+            "Imaginary",
+            "Wish"
+        ]
+    },
+    "baby": {
+        "description": [
+            "Baby/Child",
+            "Young",
+            "New"
+        ]
+    },
+    "adult": {
+        "description": [
+            "Adult/Old",
+            "Ancient",
+            "Past"
+        ]
+    },
+    "slow": {
+        "description": [
+            "Slow",
+            "Lengthy",
+            "Turtle"
+        ]
+    },
+    "fast": {
+        "description": [
+            "Fast",
+            "Lively",
+            "Hare"
+        ]
+    },
+    "defense": {
+        "description": [
+            "Defense",
+            "Protection",
+            "Wall"
+        ]
+    },
+    "conflict": {
+        "description": [
+            "Conflict",
+            "Weapon",
+            "Fight"
+        ]
+    },
+    "life": {
+        "description": [
+            "Life",
+            "Heart",
+            "Love"
+        ]
+    },
+    "death": {
+        "description": [
+            "Death",
+            "Evil",
+            "Disease"
+        ]
+    },
+    "joyous": {
+        "description": [
+            "Joyous",
+            "Positive"
+        ]
+    },
+    "sad": {
+        "description": [
+            "Sad",
+            "Negative"
+        ]
+    },
+    "electronics": {
+        "description": [
+            "Electronics",
+            "Computer"
+        ]
+    },
+    "mechanical": {
+        "description": [
+            "Mechanical",
+            "Industrial"
+        ]
+    },
+    "money": {
+        "description": [
+            "Money",
+            "Rich",
+            "Expensive"
+        ]
+    },
+    "time": {
+        "description": [
+            "Time",
+            "Duration"
+        ]
+    },
+    "religion": {
+        "description": [
+            "Religion",
+            "Myth",
+            "Belief"
+        ]
+    },
+    "power": {
+        "description": [
+            "Power",
+            "Politics"
+        ]
+    },
+    "science": {
+        "description": [
+            "Science",
+            "Mathematics",
+            "Chemistry"
+        ]
+    },
+    "medical": {
+        "description": [
+            "Medical",
+            "Drug",
+            "Cure"
+        ]
+    },
+    "head": {
+        "description": [
+            "Head",
+            "Face"
+        ]
+    },
+    "arm": {
+        "description": [
+            "Arm",
+            "Hand"
+        ]
+    },
+    "torso": {
+        "description": [
+            "Torso",
+            "Stomach"
+        ]
+    },
+    "leg": {
+        "description": [
+            "Leg",
+            "Foot"
+        ]
+    },
+    "ear": {
+        "description": [
+            "Ear",
+            "Sound",
+            "Hear"
+        ]
+    },
+    "nose": {
+        "description": [
+            "Nose",
+            "Odor",
+            "Smell"
+        ]
+    },
+    "eye": {
+        "description": [
+            "Eye",
+            "View",
+            "Watch"
+        ]
+    },
+    "mouth": {
+        "description": [
+            "Mouth",
+            "Flavor",
+            "Eat"
+        ]
+    },
+    "cloud": {
+        "description": [
+            "Cloud",
+            "Rain",
+            "Snow/Cold"
+        ]
+    },
+    "lightning": {
+        "description": [
+            "Lightning/Electricity",
+            "Storm",
+            "Anger"
+        ]
+    },
+    "night": {
+        "description": [
+            "Night",
+            "Evening",
+            "Moon"
+        ]
+    },
+    "sun": {
+        "description": [
+            "Sun/Heat",
+            "Light",
+            "Daytime"
+        ]
+    },
+    "fire": {
+        "description": [
+            "Fire",
+            "Burn",
+            "Heat"
+        ]
+    },
+    "water": {
+        "description": [
+            "Water",
+            "Liquid",
+            "Aquatic"
+        ]
+    },
+    "air": {
+        "description": [
+            "Air",
+            "Wind",
+            "Blow"
+        ]
+    },
+    "earth": {
+        "description": [
+            "Earth",
+            "Dirt",
+            "Grow"
+        ]
+    },
+    "rock": {
+        "description": [
+            "Rock",
+            "Mineral",
+            "Hard"
+        ]
+    },
+    "wood": {
+        "description": [
+            "Wood"
+        ]
+    },
+    "metal": {
+        "description": [
+            "Metal"
+        ]
+    },
+    "fabric": {
+        "description": [
+            "Fabric"
+        ]
+    },
+    "plastic": {
+        "description": [
+            "Plastic",
+            "Rubber"
+        ]
+    },
+    "paper": {
+        "description": [
+            "Paper",
+            "Sheet"
+        ]
+    },
+    "opposed": {
+        "description": [
+            "Opposed",
+            "Contrary",
+            "Inverse"
+        ]
+    },
+    "break": {
+        "description": [
+            "Break",
+            "Separate",
+            "Half"
+        ]
+    },
+    "fragment": {
+        "description": [
+            "Fragment",
+            "Multitude",
+            "Powder"
+        ]
+    },
+    "part": {
+        "description": [
+            "Part",
+            "Bit",
+            "Piece"
+        ]
+    },
+    "inside": {
+        "description": [
+            "Inside",
+            "Internal"
+        ]
+    },
+    "grid": {
+        "description": [
+            "Grid",
+            "Network",
+            "Prison"
+        ]
+    },
+    "zero": {
+        "description": [
+            "Zero",
+            "Nothing",
+            "Null"
+        ]
+    },
+    "unity": {
+        "description": [
+            "Unity",
+            "One"
+        ]
+    },
+    "straight_line": {
+        "description": [
+            "Straight line",
+            "Smooth",
+            "Rise"
+        ]
+    },
+    "curve": {
+        "description": [
+            "Curve",
+            "Arc",
+            "Rounded"
+        ]
+    },
+    "cross": {
+        "description": [
+            "Cross",
+            "Intersection",
+            "Addition"
+        ]
+    },
+    "broken_line": {
+        "description": [
+            "Broken line",
+            "Sharp",
+            "Uneven"
+        ]
+    },
+    "spiral": {
+        "description": [
+            "Spiral",
+            "Intoxication/Madness",
+            "Coil"
+        ]
+    },
+    "sinusoidal": {
+        "description": [
+            "Sinusoidal",
+            "Ripple",
+            "Hair"
+        ]
+    },
+    "ring": {
+        "description": [
+            "Ring",
+            "Cycle"
+        ]
+    },
+    "circle": {
+        "description": [
+            "Circle",
+            "Button"
+        ]
+    },
+    "triangle": {
+        "description": [
+            "Triangle"
+        ]
+    },
+    "star": {
+        "description": [
+            "Star"
+        ]
+    },
+    "rectangle": {
+        "description": [
+            "Rectangle",
+            "Square"
+        ]
+    },
+    "flat": {
+        "description": [
+            "Flat"
+        ]
+    },
+    "cube": {
+        "description": [
+            "Cube",
+            "Brick"
+        ]
+    },
+    "sphere": {
+        "description": [
+            "Sphere"
+        ]
+    },
+    "pyramid": {
+        "description": [
+            "Pyramid"
+        ]
+    },
+    "cylinder": {
+        "description": [
+            "Cylinder"
+        ]
+    },
+    "cone": {
+        "description": [
+            "Cone"
+        ]
+    },
+    "hollow": {
+        "description": [
+            "Hollow",
+            "Hole",
+            "Pierced"
+        ]
+    },
+    "tall": {
+        "description": [
+            "Tall",
+            "Greater",
+            "High"
+        ]
+    },
+    "small": {
+        "description": [
+            "Small",
+            "Lower",
+            "Below"
+        ]
+    },
+    "huge": {
+        "description": [
+            "Huge",
+            "Wider",
+            "Longer"
+        ]
+    },
+    "skinny": {
+        "description": [
+            "Skinny",
+            "Closer",
+            "Brief"
+        ]
+    },
+    "top": {
+        "description": [
+            "Top",
+            "Up",
+            "Mount"
+        ]
+    },
+    "low": {
+        "description": [
+            "Low",
+            "Down",
+            "Under"
+        ]
+    },
+    "left": {
+        "description": [
+            "Left",
+            "First",
+            "Before"
+        ]
+    },
+    "right": {
+        "description": [
+            "Right",
+            "End",
+            "After"
+        ]
+    },
+    "turn": {
+        "description": [
+            "Turn",
+            "Surround",
+            "Cycle"
+        ]
+    },
+    "activate": {
+        "description": [
+            "Use/Activate",
+            "Verb"
+        ]
+    },
+    "red": {
+        "description": [
+            "Red"
+        ]
+    },
+    "orange": {
+        "description": [
+            "Orange"
+        ]
+    },
+    "yellow": {
+        "description": [
+            "Yellow"
+        ]
+    },
+    "green": {
+        "description": [
+            "Green"
+        ]
+    },
+    "blue": {
+        "description": [
+            "Blue"
+        ]
+    },
+    "purple": {
+        "description": [
+            "Purple"
+        ]
+    },
+    "pink": {
+        "description": [
+            "Pink"
+        ]
+    },
+    "brown": {
+        "description": [
+            "Brown"
+        ]
+    },
+    "black": {
+        "description": [
+            "Black"
+        ]
+    },
+    "gray": {
+        "description": [
+            "Gray"
+        ]
+    },
+    "white": {
+        "description": [
+            "White"
+        ]
+    },
+    "clear": {
+        "description": [
+            "Clear",
+            "Invisible"
+        ]
+    }
+}
